@@ -86,6 +86,7 @@ jobs:
       MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
     name: Run Maestro tests on an OTA update
     needs: [get_ios_build, run_eas_update]
+    if: ${{ needs.get_ios_build.outputs.build_id }}
     type: maestro
     params:
       build_id: ${{ needs.get_ios_build.outputs.build_id }}
