@@ -55,7 +55,7 @@ jobs:
   # For new builds, use the one we just created in build_android, construct the deep link URL from the run_ota_update job
   run_maestro_tests_new_build_android:
     env:
-      MAESTRO_DEEP_LINK_URL: 'exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}'
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
     name: Run Maestro tests on a new build
     needs: [build_android, run_eas_update]
     type: maestro
@@ -64,7 +64,7 @@ jobs:
       flow_path: './maestro/FavoritePodcast.yaml'
   run_maestro_tests_new_build_ios:
     env:
-      MAESTRO_DEEP_LINK_URL: 'exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}'
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
     name: Run Maestro tests on a new build
     needs: [build_ios, run_eas_update]
     type: maestro
@@ -73,7 +73,7 @@ jobs:
   # If we have builds we can recycle, use what we found in get_android_build, construct the deep link URL from the run_ota_update job
   run_maestro_tests_ota_update_android:
     env:
-      MAESTRO_DEEP_LINK_URL: 'exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}'
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
     name: Run Maestro tests on an OTA update
     needs: [get_android_build, run_eas_update]
     if: ${{ needs.get_android_build.outputs.build_id }}
@@ -83,7 +83,7 @@ jobs:
       flow_path: './.maestro/FavoritePodcast.yaml'
   run_maestro_tests_ota_update_ios:
     env:
-      MAESTRO_DEEP_LINK_URL: 'exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}'
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
     name: Run Maestro tests on an OTA update
     needs: [get_ios_build, run_eas_update]
     type: maestro
