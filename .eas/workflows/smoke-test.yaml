@@ -56,7 +56,7 @@ jobs:
   run_maestro_tests_new_build_android:
     env:
       MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
-    name: Run Maestro tests on a new build
+    name: Run Maestro tests on a new build Android
     needs: [build_android, run_eas_update]
     type: maestro
     params:
@@ -65,11 +65,12 @@ jobs:
   run_maestro_tests_new_build_ios:
     env:
       MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
-    name: Run Maestro tests on a new build
+    name: Run Maestro tests on a new build iOS
     needs: [build_ios, run_eas_update]
     type: maestro
     params:
       build_id: ${{ needs.build_ios.outputs.build_id }}
+      flow_path: './maestro/FavoritePodcast.yaml'
   # If we have builds we can recycle, use what we found in get_android_build, construct the deep link URL from the run_ota_update job
   run_maestro_tests_ota_update_android:
     env:
@@ -80,7 +81,7 @@ jobs:
     type: maestro
     params:
       build_id: ${{ needs.get_android_build.outputs.build_id }}
-      flow_path: './.maestro/FavoritePodcast.yaml'
+      flow_path: './maestro/FavoritePodcast.yaml'
   run_maestro_tests_ota_update_ios:
     env:
       MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
@@ -90,5 +91,5 @@ jobs:
     type: maestro
     params:
       build_id: ${{ needs.get_ios_build.outputs.build_id }}
-      flow_path: './.maestro/FavoritePodcast.yaml'
+      flow_path: './maestro/FavoritePodcast.yaml'
 
