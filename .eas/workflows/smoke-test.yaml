@@ -18,13 +18,13 @@ jobs:
       profile: preview
   maestro_android:
     type: maestro
-    needs: build_android
+    needs: [build_android]
     params:
       build_id: ${{ needs.build_android.outputs.build_id }}
       flow_path: .maestro/FavoritePodcast.yaml
   maestro_ios:
     type: maestro
-    needs: build_ios
+    needs: [build_ios]
     params:
       build_id: ${{ needs.build_ios.outputs.build_id }}
       flow_path: .maestro/FavoritePodcast.yaml
