@@ -10,7 +10,8 @@
     "userInterfaceStyle": "automatic",
     "icon": "./assets/images/app-icon-all.png",
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10"
     },
     "newArchEnabled": true,
     "jsEngine": "hermes",
@@ -56,7 +57,10 @@
         "projectId": "1b0b7004-6a81-47f4-9bf7-727ab038dd10"
       }
     },
-    "owner": "cool-software"
+    "owner": "cool-software",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   },
   "ignite": {
     "version": "10.1.9"

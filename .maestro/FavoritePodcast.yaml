@@ -5,6 +5,7 @@ env:
   FAVORITES_TEXT: "Switch on to only show favorites"
 
 ---
+- openLink: ${MAESTRO_DEEP_LINK_URL}
 - runFlow: Login.yaml
 - tapOn: "Podcast"
 - assertVisible: "React Native Radio episodes"
