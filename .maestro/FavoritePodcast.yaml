@@ -1,12 +1,20 @@
-# flow: run the login flow and then navigate to the demo podcast list screen, favorite a podcast, and then switch the list to only be favorites.
-
 appId: com.blogapp
 env:
   FAVORITES_TEXT: "Switch on to only show favorites"
 
 ---
 - openLink: ${MAESTRO_DEEP_LINK_URL}
-- runFlow: Login.yaml
-- tapOn: "Podcast"
-- assertVisible: "React Native Radio episodes"
-
+- extendedWaitUntil:
+    visible: "Continue"
+    timeout: 30000
+- tapOn: "Continue"
+- swipe:
+    from: "blogapp.*"
+    direction: DOWN
+- assertVisible: "Log In"
+- tapOn:
+    text: "Tap to Log in!"
+- assertVisible: "Your app, almost ready for launch!"
+- tapOn:
+    text: "Let's go!"
+- assertVisible: "Components to jump start your project!"
