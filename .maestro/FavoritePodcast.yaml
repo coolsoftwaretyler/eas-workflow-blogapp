@@ -1,9 +1,13 @@
 appId: com.blogapp
-env:
-  FAVORITES_TEXT: "Switch on to only show favorites"
 
 ---
 - openLink: ${MAESTRO_DEEP_LINK_URL}
+# Conditional run for iOS deep link confirmation prompt
+- runFlow:
+    when:
+      visible: 'Open'
+    commands:
+        - tapOn: 'Open'
 - extendedWaitUntil:
     visible: "Continue"
     timeout: 30000

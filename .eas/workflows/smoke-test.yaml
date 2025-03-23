@@ -12,14 +12,14 @@ jobs:
     type: fingerprint
   # Run the EAS update in parallel with the fingerprint, since we'll just use it no matter what.
   run_eas_update:
-    name: Run EAS update
+    name: EAS update
     type: update
     params:
       platform: all
       channel: cicd # A specific channel only for CI/CD to use.
   # Check if we have an existing Android development client
   get_android_build:
-    name: Check for existing android build
+    name: Check for Android build
     needs: [fingerprint]
     type: get-build
     params:
@@ -28,7 +28,7 @@ jobs:
       platform: android
   # Check if we have an existing iOS development client
   get_ios_build:
-    name: Check for existing iOS build
+    name: Check for iOS build
     needs: [fingerprint]
     type: get-build
     params:
@@ -55,8 +55,8 @@ jobs:
   # For new builds, use the one we just created in build_android, construct the deep link URL from the run_ota_update job
   run_maestro_tests_new_build_android:
     env:
-      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
-    name: Run Maestro tests on a new build Android
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_eas_update.outputs.updates_json || '[]')[0].group }}"
+    name: New Android Build Maestro
     needs: [build_android, run_eas_update]
     type: maestro
     params:
@@ -64,8 +64,8 @@ jobs:
       flow_path: './.maestro/FavoritePodcast.yaml'
   run_maestro_tests_new_build_ios:
     env:
-      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
-    name: Run Maestro tests on a new build iOS
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_eas_update.outputs.updates_json || '[]')[0].group }}"
+    name: New iOS Build Maestro
     needs: [build_ios, run_eas_update]
     type: maestro
     params:
@@ -74,8 +74,8 @@ jobs:
   # If we have builds we can recycle, use what we found in get_android_build, construct the deep link URL from the run_ota_update job
   run_maestro_tests_ota_update_android:
     env:
-      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
-    name: Run Maestro tests on an OTA update
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_eas_update.outputs.updates_json || '[]')[0].group }}"
+    name: EAS Update Android Maestro
     needs: [get_android_build, run_eas_update]
     if: ${{ needs.get_android_build.outputs.build_id }}
     type: maestro
@@ -84,8 +84,8 @@ jobs:
       flow_path: './.maestro/FavoritePodcast.yaml'
   run_maestro_tests_ota_update_ios:
     env:
-      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_ota_update.outputs.updates_json || '[]')[0].group }}"
-    name: Run Maestro tests on an OTA update
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_eas_update.outputs.updates_json || '[]')[0].group }}"
+    name: EAS Update iOS Maestro
     needs: [get_ios_build, run_eas_update]
     if: ${{ needs.get_ios_build.outputs.build_id }}
     type: maestro
