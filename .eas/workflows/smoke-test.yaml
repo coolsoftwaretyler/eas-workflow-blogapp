@@ -1,0 +1,95 @@
+name: Smoke Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Fingerprint this PR to see what native capabilities it needs
+  fingerprint:
+    name: Fingerprint
+    type: fingerprint
+  # Run the EAS update in parallel with the fingerprint, since we'll use it no matter what.
+  run_eas_update:
+    name: EAS update
+    type: update
+    params:
+      platform: all
+      channel: cicd # A specific channel only for CI/CD to use.
+  # Check if we have an existing Android development client
+  get_android_build:
+    name: Check for Android build
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
+      profile: devClient
+      platform: android
+  # Check if we have an existing iOS development client
+  get_ios_build:
+    name: Check for iOS build
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
+      profile: devClient
+  # If we don't get a build_id from get_android_build, move forward with building from the ground up.
+  build_android:
+    name: Build Android
+    needs: [get_android_build]
+    if: ${{ !needs.get_android_build.outputs.build_id }}
+    type: build
+    params:
+      platform: android
+      profile: devClient
+  # If we don't get a build_id from get_ios_build, move forward with building from the ground up.
+  build_ios:
+    name: Build iOS
+    needs: [get_ios_build]
+    if: ${{ !needs.get_ios_build.outputs.build_id }}
+    type: build
+    params:
+      platform: ios
+      profile: devClient
+  # For new builds, use the one we just created in build_android, construct the deep link URL from the run_eas_update job
+  run_maestro_tests_new_build_android:
+    env:
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_eas_update.outputs.updates_json || '[]')[0].group }}"
+    name: Android Maestro - New Build
+    needs: [build_android, run_eas_update]
+    type: maestro
+    params:
+      build_id: ${{ needs.build_android.outputs.build_id }}
+      flow_path: './.maestro/FavoritePodcast.yaml'
+  run_maestro_tests_new_build_ios:
+    env:
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_eas_update.outputs.updates_json || '[]')[0].group }}"
+    name: iOS Maestro - New Build
+    needs: [build_ios, run_eas_update]
+    type: maestro
+    params:
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      flow_path: './.maestro/FavoritePodcast.yaml'
+  # If we have builds we can recycle, use what we found in get_android_build, construct the deep link URL from the run_eas_update job
+  run_maestro_tests_ota_update_android:
+    env:
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_eas_update.outputs.updates_json || '[]')[0].group }}"
+    name: Android Maestro - EAS
+    needs: [get_android_build, run_eas_update]
+    if: ${{ needs.get_android_build.outputs.build_id }}
+    type: maestro
+    params:
+      build_id: ${{ needs.get_android_build.outputs.build_id }}
+      flow_path: './.maestro/FavoritePodcast.yaml'
+  run_maestro_tests_ota_update_ios:
+    env:
+      MAESTRO_DEEP_LINK_URL: "exp+blogapp://expo-development-client/?url=https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10/group/${{ fromJSON(needs.run_eas_update.outputs.updates_json || '[]')[0].group }}"
+    name: iOS Maestro - EAS
+    needs: [get_ios_build, run_eas_update]
+    if: ${{ needs.get_ios_build.outputs.build_id }}
+    type: maestro
+    params:
+      build_id: ${{ needs.get_ios_build.outputs.build_id }}
+      flow_path: './.maestro/FavoritePodcast.yaml'
+

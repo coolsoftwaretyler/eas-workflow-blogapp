@@ -3,6 +3,17 @@
     "version": ">= 3.15.1"
   },
   "build": {
+    "devClient": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleDebug"
+      },
+      "ios": {
+        "buildConfiguration": "Debug",
+        "simulator": true
+      }
+    },
     "development": {
       "extends": "production",
       "distribution": "internal",
@@ -12,7 +23,8 @@
       "ios": {
         "buildConfiguration": "Debug",
         "simulator": true
-      }
+      },
+      "channel": "development"
     },
     "development:device": {
       "extends": "development",
@@ -25,14 +37,23 @@
     "preview": {
       "extends": "production",
       "distribution": "internal",
-      "ios": { "simulator": true },
-      "android": { "buildType": "apk" }
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "channel": "preview"
     },
     "preview:device": {
       "extends": "preview",
-      "ios": { "simulator": false }
+      "ios": {
+        "simulator": false
+      }
     },
-    "production": {}
+    "production": {
+      "channel": "production"
+    }
   },
   "submit": {
     "production": {}

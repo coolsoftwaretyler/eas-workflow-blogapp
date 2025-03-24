@@ -10,7 +10,8 @@
     "userInterfaceStyle": "automatic",
     "icon": "./assets/images/app-icon-all.png",
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10"
     },
     "newArchEnabled": true,
     "jsEngine": "hermes",
@@ -29,7 +30,10 @@
     "ios": {
       "icon": "./assets/images/app-icon-ios.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.blogapp"
+      "bundleIdentifier": "com.blogapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "web": {
       "favicon": "./assets/images/app-icon-web-favicon.png",
@@ -46,6 +50,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#191015"
         }
+      ],
+      [
+        "expo-dev-client",
+        {
+          "launchMode": "most-recent"
+        }
       ]
     ],
     "experiments": {
@@ -56,7 +66,10 @@
         "projectId": "1b0b7004-6a81-47f4-9bf7-727ab038dd10"
       }
     },
-    "owner": "coolsoftwaretyler"
+    "owner": "cool-software",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   },
   "ignite": {
     "version": "10.1.9"
