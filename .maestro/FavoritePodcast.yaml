@@ -8,14 +8,6 @@ appId: com.blogapp
       visible: 'Open'
     commands:
         - tapOn: 'Open'
-# Wait for the Expo development build splash screen, and tap/swipe through it.
-- extendedWaitUntil:
-    visible: "Continue"
-    timeout: 30000
-- tapOn: "Continue"
-- swipe:
-    from: "blogapp.*"
-    direction: DOWN
 # Smoke tests for our app.
 - assertVisible: "Log In"
 - tapOn:
