@@ -7,10 +7,10 @@
       "developmentClient": true,
       "distribution": "internal",
       "android": {
-        "gradleCommand": ":app:assembleDebug"
+        "gradleCommand": ":app:assembleRelease"
       },
       "ios": {
-        "buildConfiguration": "Debug",
+        "buildConfiguration": "Release",
         "simulator": true
       }
     },
