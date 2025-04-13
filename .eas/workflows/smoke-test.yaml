@@ -27,7 +27,7 @@ jobs:
     type: get-build
     params:
       fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
-      profile: devClient
+      profile: smoke-test
       platform: android
   # Check if we have an existing iOS development client
   get_ios_build:
