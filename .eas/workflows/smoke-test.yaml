@@ -9,7 +9,10 @@ jobs:
   # Fingerprint this PR to see what native capabilities it needs
   fingerprint:
     name: Fingerprint
+    env:
+      EAS_PUBLIC_UPDATE_CHANNEL: ${{ github.ref || 'manual-workflow-trigger' }}
     type: fingerprint
+
   # Run the EAS update in parallel with the fingerprint, since we'll use it no matter what.
   run_eas_update:
     name: EAS update
