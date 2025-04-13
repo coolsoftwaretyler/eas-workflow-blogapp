@@ -1,6 +1,7 @@
 appId: com.blogapp
 
 ---
+- launchApp
 - assertVisible: "Log In"
 - tapOn:
     text: "Tap to Log in!"
