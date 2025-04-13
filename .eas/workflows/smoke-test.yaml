@@ -16,7 +16,7 @@ jobs:
     type: update
     params:
       platform: all
-      channel: {{ github.ref || 'manual-workflow-trigger' }} # A specific channel for each PR.
+      channel: "{{ github.ref || 'manual-workflow-trigger' }}" # A specific channel for each PR.
   # Check if we have an existing Android development client
   get_android_build:
     name: Check for Android build
