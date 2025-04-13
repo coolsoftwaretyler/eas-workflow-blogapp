@@ -19,6 +19,7 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
     ...config,
     plugins: [...existingPlugins, require("./plugins/withSplashScreen").withSplashScreen],
     updates: {
+      url: "https://u.expo.dev/1b0b7004-6a81-47f4-9bf7-727ab038dd10",
       useEmbeddedUpdate: process.env.EAS_PUBLIC_UPDATE_CHANNEL ? false : true,
       fallbackToCacheTimeout: process.env.EAS_PUBLIC_UPDATE_CHANNEL ? 30000 : 0,
       requestHeaders: process.env.EAS_PUBLIC_UPDATE_CHANNEL
