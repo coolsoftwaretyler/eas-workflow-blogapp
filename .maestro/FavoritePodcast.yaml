@@ -1,6 +1,4 @@
-# Smoke test for our app.
 appId: com.blogapp
-
 ---
 - launchApp
 - assertVisible: "Log In"
