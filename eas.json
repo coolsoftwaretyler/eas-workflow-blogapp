@@ -5,14 +5,7 @@
   "build": {
     "devClient": {
       "developmentClient": true,
-      "distribution": "internal",
-      "android": {
-        "gradleCommand": ":app:assembleRelease"
-      },
-      "ios": {
-        "buildConfiguration": "Release",
-        "simulator": true
-      }
+      "distribution": "internal"
     },
     "development": {
       "extends": "production",
