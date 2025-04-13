@@ -1,14 +1,6 @@
 appId: com.blogapp
 
 ---
-- openLink: ${MAESTRO_DEEP_LINK_URL}
-# Conditional run for iOS deep link confirmation prompt
-- runFlow:
-    when:
-      visible: 'Open'
-    commands:
-        - tapOn: 'Open'
-# Smoke tests for our app.
 - assertVisible: "Log In"
 - tapOn:
     text: "Tap to Log in!"

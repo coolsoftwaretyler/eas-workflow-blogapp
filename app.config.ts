@@ -18,5 +18,14 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
   return {
     ...config,
     plugins: [...existingPlugins, require("./plugins/withSplashScreen").withSplashScreen],
+    updates: {
+      useEmbeddedUpdate: process.env.EAS_PUBLIC_UPDATE_CHANNEL ? false : true,
+      fallbackToCacheTimeout: process.env.EAS_PUBLIC_UPDATE_CHANNEL ? 30000 : 0,
+      requestHeaders: process.env.EAS_PUBLIC_UPDATE_CHANNEL
+        ? {
+            "expo-channel-name": process.env.EAS_PUBLIC_UPDATE_CHANNEL,
+          }
+        : undefined,
+    },
   }
 }
