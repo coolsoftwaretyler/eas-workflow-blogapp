@@ -1,11 +1,10 @@
-# Welcome to your new ignited app!
+# EAS Workflow Example App - Use Dynamic Channel Names to speed up Maestro tests
 
-> The latest and greatest boilerplate for Infinite Red opinions
+This repository is the sample code from [my blog post about speeding up CI with EAS workflows](https://shift.infinite.red/cut-ci-from-20-minutes-to-6-with-eas-workflows-and-eas-updates-8d928fe5dcfc).
 
-This is the boilerplate that [Infinite Red](https://infinite.red) uses as a way to test bleeding-edge changes to our React Native stack.
+The original blog post contained some errors, so if you're using this for reference, I recommend [reading through this diff](https://github.com/coolsoftwaretyler/eas-workflow-blogapp/compare/c479601bcc3c8e488c2cc1d93acb553b0e3f7191...2fbb054497cc3511bff6e71e0fc758a19172a783), which outlines a new approach. Updated blog content incoming after edits.
 
-- [Quick start documentation](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/Boilerplate.md)
-- [Full documentation](https://github.com/infinitered/ignite/blob/master/docs/README.md)
+[Built with Ignite](https://infinite.red/ignite).
 
 ## Getting Started
 
